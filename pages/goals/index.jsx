@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
 import { goalsStore } from "mobx/goalsStore"
-import { useRouter } from "next/dist/client/router"
+import { useRouter } from "next/router"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
@@ -35,15 +35,16 @@ const index = observer(() => {
         </button>
       </div>
       <ul className="list-decimal pl-5">
-        {goals.map((goal, index) => (
-          <li
-            key={index}
-            onClick={() => router.push(`/goals/${goal.id}`)}
-            className="mb-2 bg-gray-200 p-2 rounded"
-          >
-            {goal.name}
-          </li>
-        ))}
+        {goals &&
+          goals.map((goal, index) => (
+            <li
+              key={index}
+              onClick={() => router.push(`/goals/${goal.id}`)}
+              className="mb-2 bg-gray-200 p-2 rounded"
+            >
+              {goal.name}
+            </li>
+          ))}
       </ul>
     </div>
   )

@@ -1,18 +1,21 @@
 import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
 import { goalsStore } from "mobx/goalsStore"
-import Router from "next/router"
+import { useRouter } from "next/router"
+import { toJS } from "mobx"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
-  const goalId = Router.query.id
+  const router = useRouter()
+  console.log("id page => " + router.query.id)
+  const goalId = router.query.id
   console.log("id page => " + goalId)
 
-  const goal = goals.find((g) => g.id === goalId)
-  const missions = goal.missions
-  console.log(missions, goal)
-
   const { goals, addMission } = goalsStore
+  const goal = goals.find((g) => g.id === goalId)
+  console.log(toJS(goal))
+  // console.log(goal.missions, goal)
+
   const addTask = () => {
     if (inputValue.trim()) {
       addMission(goalId, inputValue.trim())
@@ -22,7 +25,7 @@ const index = observer(() => {
 
   return (
     <div className="p-5 bg-r max-w-xs mx-auto">
-      <div>goal:{goal.name}</div>
+      {/* <div>goal:{goal.name}</div> */}
       <div className="flex justify-center text-xl mb-2">Missions</div>
       <div className="mb-5 ">
         <input
@@ -40,11 +43,13 @@ const index = observer(() => {
         </button>
       </div>
       <ul className="list-decimal pl-5">
-        {missions.map((task, index) => (
-          <li key={index} className="mb-2 bg-gray-200 p-2 rounded">
-            {task}
-          </li>
-        ))}
+        {goal &&
+          goal.missions &&
+          goal.missions.map((mission, index) => (
+            <li key={index} className="mb-2 bg-gray-200 p-2 rounded">
+              {mission.name}
+            </li>
+          ))}
       </ul>
     </div>
   )
