@@ -6,20 +6,22 @@ import { toJS } from "mobx"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
+  const [inputTValue, setInputTValue] = useState("")
   const router = useRouter()
   console.log("id page => " + router.query.id)
   const goalId = router.query.id
   console.log("id page => " + goalId)
 
-  const { goals, addMission } = goalsStore
+  const { goals, addMission, setChooseMission } = goalsStore
   const goal = goals.find((g) => g.id === goalId)
   console.log(toJS(goal))
   // console.log(goal.missions, goal)
 
   const addTask = () => {
     if (inputValue.trim()) {
-      addMission(goalId, inputValue.trim())
+      addMission(goalId, inputValue.trim(), inputTValue)
       setInputValue("")
+      setInputTValue("")
     }
   }
 
@@ -33,7 +35,14 @@ const index = observer(() => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           className="p-2 w-4/5 border rounded"
-          placeholder="Enter task..."
+          placeholder="Enter mission..."
+        />
+        <input
+          type="number"
+          value={inputTValue}
+          onChange={(e) => setInputTValue(e.target.value)}
+          className="p-2 w-4/5 border rounded"
+          placeholder="Enter amount..."
         />
         <button
           onClick={addTask}
@@ -46,7 +55,14 @@ const index = observer(() => {
         {goal &&
           goal.missions &&
           goal.missions.map((mission, index) => (
-            <li key={index} className="mb-2 bg-gray-200 p-2 rounded">
+            <li
+              key={index}
+              onClick={() => {
+                setChooseMission(goal.id, mission.id)
+                router.push(`/trace`)
+              }}
+              className="mb-2 bg-gray-200 p-2 rounded"
+            >
               {mission.name}
             </li>
           ))}

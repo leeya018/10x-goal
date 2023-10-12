@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { useRouter } from "next/dist/client/router"
+import { useRouter } from "next/router"
 
 const index = observer(() => {
   const router = useRouter()
