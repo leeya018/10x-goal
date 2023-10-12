@@ -11,15 +11,15 @@ const Trace = observer(() => {
     increaseMissionAmount,
     decreaseMissionAmount,
   } = goalsStore
+
   const goal = goals.find((g) => g.id === chosenGoalId)
   console.log(toJS(goal))
   const mission = goal && goal.missions.find((m) => m.id === chosenMissionId)
   console.log(toJS(mission))
-
   return (
     <div className="h-[100vh] w-screen bg-secondary flex flex-col items-center px-2">
       <div className="mt-2">Trace</div>
-      {/* <div className="mt-2">{mission?.name}</div> */}
+      <div className="mt-2">{mission?.name}</div>
       <div className="mt-10">
         {mission?.amount}/{mission?.targetAmount}
       </div>
