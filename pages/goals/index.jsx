@@ -1,7 +1,9 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { goalsStore } from "mobx/goalsStore"
 import { useRouter } from "next/router"
+import { colors, getRandomNumber } from "lib/util"
+import NoSsr from "@material-ui/core/NoSsr"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
@@ -36,17 +38,34 @@ const index = observer(() => {
       </div>
       <ul className="list-decimal pl-5">
         {goals &&
-          goals.map((goal, index) => (
-            <li
-              key={index}
-              onClick={() => router.push(`/goals/${goal.id}`)}
-              className="mb-2 bg-gray-200 p-2 rounded"
-            >
-              {goal.name}
-            </li>
-          ))}
+          goals.length > 0 &&
+          goals.map((goal, index) => <Goal key={index} goal={goal} />)}
       </ul>
     </div>
+  )
+})
+
+const Goal = observer(({ goal }) => {
+  const c1 = colors[getRandomNumber(20)]
+  const c2 = colors[getRandomNumber(20)]
+  const gradientClass = `mb-2 bg-gray-200 p-2 rounded border-2 rounder-md bg-gradient-to-br from-[${c1}] to-[${c2}]`
+
+  console.log(gradientClass)
+  const router = useRouter()
+
+  return (
+    <NoSsr>
+      <li
+        key={index}
+        onClick={() => router.push(`/goals/${goal.id}`)}
+        style={{
+          backgroundImage: `linear-gradient(to bottom right, ${c1}, ${c2})`,
+        }}
+        className="mb-2 bg-gray-200 p-2 rounded border-2 rounder-md"
+      >
+        <div>{goal?.name}</div>
+      </li>
+    </NoSsr>
   )
 })
 
