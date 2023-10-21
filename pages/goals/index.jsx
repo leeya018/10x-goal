@@ -20,7 +20,7 @@ const index = observer(() => {
 
   return (
     <div className="p-5 bg-r max-w-xs mx-auto">
-      <div className="flex justify-center text-xl mb-2">Goals</div>
+      <div className="flex justify-center  mb-2">Goals</div>
       <div className="mb-5 ">
         <input
           type="text"
