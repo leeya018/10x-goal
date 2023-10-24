@@ -22,6 +22,7 @@ const Trace = observer(() => {
   const [isClickedPlus, setIsClickedPlus] = useState(false)
   const [isClickedMinus, setIsClickedMinus] = useState(false)
   const [isClient, setIsClient] = useState(false)
+  const [canPlay, setCanPlay] = useState(true)
   const { sound, playSound } = useSound("/yeah.mp3")
 
   const goal = goals.find((g) => g.id === chosenGoalId)
@@ -31,15 +32,21 @@ const Trace = observer(() => {
 
   useEffect(() => {
     setIsClient(true)
-    // playSound()
   }, [])
+  useEffect(() => {
+    console.log(canPlay)
+    if (
+      parseInt(mission?.amount) >= parseInt(mission?.targetAmount) &&
+      canPlay
+    ) {
+      playSound()
+      setCanPlay(false)
+      setTimeout(() => {
+        setCanPlay(true)
+      }, 5000)
+    }
+  }, [mission?.amount])
 
-  // useEffect(() => {
-
-  // }, [mission])
-  if (parseInt(mission?.amount) >= parseInt(mission?.targetAmount)) {
-    playSound()
-  }
   if (!isClient) return null
 
   return (
