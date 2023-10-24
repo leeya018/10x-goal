@@ -9,3 +9,34 @@ li,
 table p {
   @apply text-2xl;
 }
+.shiny-effect {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shine 2s infinite;
+  position: relative;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.shiny-effect.blue {
+  background-color: #3490dc;
+}
+
+.shiny-effect.blue:hover {
+  background-color: #1e7cb7;
+}
+
+.shiny-effect.red {
+  background-color: red;
+}
+
+.shiny-effect.red:hover {
+  background-color: darkred; /* or another shade you'd like on hover */
+}

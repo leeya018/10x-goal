@@ -6,6 +6,7 @@ import GoBack from "components/GoBack"
 import Title from "components/Title"
 import TimeLeft from "components/TimeLeft"
 import { Chart } from "components/Chart"
+import ShinyButton from "components/ShinyButton"
 
 const Trace = observer(() => {
   const {
@@ -50,7 +51,8 @@ const Trace = observer(() => {
       <div className="w-[30vh]">
         <Chart done={mission.amount} total={parseInt(mission.targetAmount)} />
       </div>
-      <button
+
+      {/* <button
         onClick={() => decreaseMissionAmount(chosenGoalId, chosenMissionId)}
         onMouseDown={() => setIsClickedMinus(true)}
         onMouseUp={() => setIsClickedMinus(false)}
@@ -60,19 +62,26 @@ const Trace = observer(() => {
         ring-2 w-10  h-10 cursor-pointer rounded-full text-5xl`}
       >
         -
-      </button>
-      <div className="flex justify-between px-2 w-full bottom-2 absolute">
-        <button
+      </button> */}
+
+      <div className="flex gap-2 px-2 w-full bottom-2 absolute">
+        <ShinyButton
+          onClick={() => decreaseMissionAmount(chosenGoalId, chosenMissionId)}
+          onMouseDown={() => setIsClickedMinus(true)}
+          onMouseUp={() => setIsClickedMinus(false)}
+          className=" h-40 w-[40%] shiny-effect ring-2 ring-pink_login_but2 red"
+        >
+          -
+        </ShinyButton>
+        <ShinyButton
           ref={buttonRef}
           onMouseDown={() => setIsClickedPlus(true)}
           onMouseUp={() => setIsClickedPlus(false)}
           onClick={() => increaseMissionAmount(chosenGoalId, chosenMissionId)}
-          className={`${
-            isClickedPlus && "bg-green"
-          }  ring-blueL ring-2 w-full h-40 cursor-pointer rounded-xl text-5xl `}
+          className="p-4 h-40 w-full shiny-effect ring-2 blue"
         >
           +
-        </button>
+        </ShinyButton>
       </div>
     </div>
   )
