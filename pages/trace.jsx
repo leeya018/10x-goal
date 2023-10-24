@@ -7,6 +7,7 @@ import Title from "components/Title"
 import TimeLeft from "components/TimeLeft"
 import { Chart } from "components/Chart"
 import ShinyButton from "components/ShinyButton"
+import useSound from "hooks/useSound"
 
 const Trace = observer(() => {
   const {
@@ -21,6 +22,7 @@ const Trace = observer(() => {
   const [isClickedPlus, setIsClickedPlus] = useState(false)
   const [isClickedMinus, setIsClickedMinus] = useState(false)
   const [isClient, setIsClient] = useState(false)
+  const { sound, playSound } = useSound("/yeah.mp3")
 
   const goal = goals.find((g) => g.id === chosenGoalId)
   console.log(toJS(goal))
@@ -29,8 +31,15 @@ const Trace = observer(() => {
 
   useEffect(() => {
     setIsClient(true)
+    // playSound()
   }, [])
 
+  // useEffect(() => {
+
+  // }, [mission])
+  if (parseInt(mission?.amount) >= parseInt(mission?.targetAmount)) {
+    playSound()
+  }
   if (!isClient) return null
 
   return (
