@@ -54,7 +54,7 @@ class Goals {
       }
     })
   }
-  addMission(goalId, missionName, targetAmount) {
+  addMission(goalId, missionName, targetAmount, date) {
     this.goals.map((g) => {
       if (g.id === goalId) {
         var missionId = uuid4()
@@ -63,6 +63,7 @@ class Goals {
           name: missionName,
           targetAmount,
           amount: 0,
+          date,
         })
       }
     })
