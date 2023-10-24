@@ -4,6 +4,7 @@ import { goalsStore } from "mobx/goalsStore"
 import { toJS } from "mobx"
 import GoBack from "components/GoBack"
 import Title from "components/Title"
+import TimeLeft from "components/TimeLeft"
 
 const Trace = observer(() => {
   const {
@@ -17,17 +18,25 @@ const Trace = observer(() => {
   const buttonRef = useRef(null)
   const [isClickedPlus, setIsClickedPlus] = useState(false)
   const [isClickedMinus, setIsClickedMinus] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   const goal = goals.find((g) => g.id === chosenGoalId)
   console.log(toJS(goal))
   const mission = goal && goal.missions.find((m) => m.id === chosenMissionId)
   console.log(toJS(mission))
 
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) return null
+
   return (
     <div className="h-[100vh] w-screen bg-secondary flex flex-col items-center px-2">
       <GoBack />
+      {/* <TimeLeft createdDate={"2023-10-24T10:00:29.212Z"} /> */}
+      <TimeLeft createdDate={mission?.date} />
       <Title className="pt-5">Trace</Title>
-
       <div className="mt-2">{mission?.name}</div>
       <div
         className={`${

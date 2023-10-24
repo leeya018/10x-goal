@@ -31,7 +31,7 @@ const index = observer(() => {
   }
 
   const addTask = () => {
-    if (getDiffInDays(new Date(), lastMission.date) >= 1) return
+    if (getDiffInDays(new Date(), lastMission?.date) >= 1) return
     if (!inputTValue) return
     if (inputValue.trim()) {
       addMission(goalId, inputValue.trim(), inputTValue, new Date())
