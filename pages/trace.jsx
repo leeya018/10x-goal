@@ -5,6 +5,7 @@ import { toJS } from "mobx"
 import GoBack from "components/GoBack"
 import Title from "components/Title"
 import TimeLeft from "components/TimeLeft"
+import { Chart } from "components/Chart"
 
 const Trace = observer(() => {
   const {
@@ -46,28 +47,33 @@ const Trace = observer(() => {
       >
         {mission?.amount}/{mission?.targetAmount}
       </div>
-      <button
-        ref={buttonRef}
-        onMouseDown={() => setIsClickedPlus(true)}
-        onMouseUp={() => setIsClickedPlus(false)}
-        onClick={() => increaseMissionAmount(chosenGoalId, chosenMissionId)}
-        className={`${
-          isClickedPlus && "bg-green"
-        } mt-20 ring-blueL ring-2 w-40 h-40 cursor-pointer rounded-full text-5xl `}
-      >
-        +
-      </button>
+      <div className="w-[30vh]">
+        <Chart done={mission.amount} total={parseInt(mission.targetAmount)} />
+      </div>
       <button
         onClick={() => decreaseMissionAmount(chosenGoalId, chosenMissionId)}
         onMouseDown={() => setIsClickedMinus(true)}
         onMouseUp={() => setIsClickedMinus(false)}
         className={`${
           isClickedMinus && "bg-red"
-        } flex justify-center items-center mt-10 ring-blueL 
-        ring-2 w-10 h-10 cursor-pointer rounded-full text-5xl p-0 m-0 text-center text-vertical`}
+        } flex justify-center items-center  ring-blueL mt-5 
+        ring-2 w-10  h-10 cursor-pointer rounded-full text-5xl`}
       >
         -
       </button>
+      <div className="flex justify-between px-2 w-full bottom-2 absolute">
+        <button
+          ref={buttonRef}
+          onMouseDown={() => setIsClickedPlus(true)}
+          onMouseUp={() => setIsClickedPlus(false)}
+          onClick={() => increaseMissionAmount(chosenGoalId, chosenMissionId)}
+          className={`${
+            isClickedPlus && "bg-green"
+          }  ring-blueL ring-2 w-full h-40 cursor-pointer rounded-xl text-5xl `}
+        >
+          +
+        </button>
+      </div>
     </div>
   )
 })
