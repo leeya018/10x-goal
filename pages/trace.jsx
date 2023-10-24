@@ -26,7 +26,7 @@ const Trace = observer(() => {
   return (
     <div className="h-[100vh] w-screen bg-secondary flex flex-col items-center px-2">
       <GoBack />
-      <Title>Trace</Title>
+      <Title className="pt-5">Trace</Title>
 
       <div className="mt-2">{mission?.name}</div>
       <div

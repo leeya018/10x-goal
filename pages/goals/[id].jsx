@@ -41,10 +41,10 @@ const index = observer(() => {
   }
 
   return (
-    <div className="p-5 flex items-center bg-r max-w-xs mx-auto pt-20">
+    <div className="p-5 flex items-center bg-r max-w-xs mx-auto">
       <GoBack />
       <div>
-        <Title>Missions</Title>
+        <Title className="pt-5">Missions</Title>
 
         <div className="mb-5 ">
           <input
@@ -71,7 +71,7 @@ const index = observer(() => {
             Add
           </button>
         </div>
-        <ul className="h-80 flex flex-col overflow-y-scroll  ">
+        <ul className="h-[24rem] flex flex-col overflow-y-scroll  ">
           {goal &&
             goal.missions &&
             [...goal.missions]

@@ -21,13 +21,14 @@ class Goals {
     this.chosenGoalId = goalId
   }
 
-  addGoal(name) {
+  addGoal(name, color) {
     var id = uuid4()
 
     this.goals.push({
       id,
       name,
       missions: [],
+      color,
     })
   }
   decreaseMissionAmount(goalId, missionId) {
