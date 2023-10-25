@@ -31,7 +31,6 @@ const index = observer(() => {
   }
 
   const addTask = () => {
-    if (getDiffInDays(new Date(), lastMission?.date) >= 1) return
     if (!inputTValue) return
     if (inputValue.trim()) {
       addMission(goalId, inputValue.trim(), inputTValue, new Date())
@@ -49,7 +48,6 @@ const index = observer(() => {
         <div className="mb-5 ">
           <input
             disabled={getDiffInDays(new Date(), lastMission?.date) < 1}
-            // disabled={true}
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
