@@ -48,7 +48,7 @@ const index = observer(() => {
 
         <div className="mb-5 ">
           <input
-            disabled={getDiffInDays(new Date(), lastMission?.date) > 1}
+            disabled={getDiffInDays(new Date(), lastMission?.date) < 1}
             // disabled={true}
             type="text"
             value={inputValue}
@@ -57,7 +57,7 @@ const index = observer(() => {
             placeholder="Enter mission..."
           />
           <input
-            disabled={getDiffInDays(new Date(), lastMission?.date) > 1}
+            disabled={getDiffInDays(new Date(), lastMission?.date) < 1}
             type="number"
             value={inputTValue}
             onChange={(e) => setInputTValue(e.target.value)}

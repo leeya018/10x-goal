@@ -68,18 +68,6 @@ const Trace = observer(() => {
         <Chart done={mission.amount} total={parseInt(mission.targetAmount)} />
       </div>
 
-      {/* <button
-        onClick={() => decreaseMissionAmount(chosenGoalId, chosenMissionId)}
-        onMouseDown={() => setIsClickedMinus(true)}
-        onMouseUp={() => setIsClickedMinus(false)}
-        className={`${
-          isClickedMinus && "bg-red"
-        } flex justify-center items-center  ring-blueL mt-5 
-        ring-2 w-10  h-10 cursor-pointer rounded-full text-5xl`}
-      >
-        -
-      </button> */}
-
       <div className="flex gap-2 px-2 w-full bottom-2 absolute">
         <ShinyButton
           onClick={() => decreaseMissionAmount(chosenGoalId, chosenMissionId)}
