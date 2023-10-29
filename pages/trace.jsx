@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { goalsStore } from "mobx/goalsStore"
+import { appStore } from "mobx/appStore"
 import { toJS } from "mobx"
 import GoBack from "components/GoBack"
 import Title from "components/Title"
@@ -16,7 +16,7 @@ const Trace = observer(() => {
     chosenGoalId,
     increaseMissionAmount,
     decreaseMissionAmount,
-  } = goalsStore
+  } = appStore
 
   const buttonRef = useRef(null)
   const [isClickedPlus, setIsClickedPlus] = useState(false)

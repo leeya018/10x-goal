@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { goalsStore } from "mobx/goalsStore"
+import { appStore } from "mobx/appStore"
 import { useRouter } from "next/router"
 import { colors, getRandomNumber } from "lib/util"
 import NoSsr from "@material-ui/core/NoSsr"
@@ -13,7 +13,7 @@ const index = observer(() => {
   const [isPalateOpen, setIsPalateOpen] = useState(false)
   const router = useRouter()
 
-  const { goals, addGoal } = goalsStore
+  const { goals, addGoal } = appStore
   console.log(color)
   const addTask = () => {
     if (!color) return
@@ -68,12 +68,18 @@ const index = observer(() => {
 })
 
 const Goal = observer(({ goal }) => {
-  const c1 = colors[getRandomNumber(20)]
-  const c2 = colors[getRandomNumber(20)]
-  const gradientClass = `mb-2 bg-gray-200 p-2 rounded border-2 rounder-md bg-gradient-to-br from-[${c1}] to-[${c2}]`
+  const { goals, addGoal, removeGoal } = appStore
+
+  const gradientClass = `mb-2 bg-gray-200 p-2 rounded border-2
+   rounder-md bg-gradient-to-br`
 
   console.log(gradientClass)
   const router = useRouter()
+
+  const remove = (e) => {
+    e.stopPropagation()
+    removeGoal(goal.id)
+  }
 
   return (
     <NoSsr>
@@ -81,12 +87,12 @@ const Goal = observer(({ goal }) => {
         key={index}
         onClick={() => router.push(`/goals/${goal.id}`)}
         style={{
-          // backgroundImage: `linear-gradient(to bottom right, ${c1}, ${c2})`,
           background: goal.color,
         }}
         className="mb-2 bg-gray-200 p-2 rounded border-2 rounder-md"
       >
         <div>{goal?.name}</div>
+        <button onClick={(e) => remove(e)}>remove </button>
       </li>
     </NoSsr>
   )

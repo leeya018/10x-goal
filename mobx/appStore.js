@@ -1,7 +1,7 @@
 import uuid4 from "uuid4"
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, toJS } from "mobx"
 
-class Goals {
+class App {
   goals = []
   chosenGoalId = null
   chosenMissionId = null
@@ -15,6 +15,8 @@ class Goals {
     this.setChooseMission = this.setChooseMission.bind(this)
     this.increaseMissionAmount = this.increaseMissionAmount.bind(this)
     this.decreaseMissionAmount = this.decreaseMissionAmount.bind(this)
+    this.removeGoal = this.removeGoal.bind(this)
+    this.removeMission = this.removeMission.bind(this)
   }
   setChooseMission(goalId, missionId) {
     this.chosenMissionId = missionId
@@ -30,6 +32,11 @@ class Goals {
       missions: [],
       color,
     })
+  }
+
+  removeGoal(id) {
+    const filteredGoals = [...this.goals].filter((goal) => goal.id !== id)
+    this.goals = [...filteredGoals]
   }
   decreaseMissionAmount(goalId, missionId) {
     this.goals.map((g) => {
@@ -69,6 +76,21 @@ class Goals {
       }
     })
   }
+  removeMission(goalId, missionId) {
+    const goal = [...this.goals].find((goal) => goal.id == goalId)
+    console.log(toJS(goal))
+    const tmpMissions = goal.missions.filter(
+      (mission) => mission.id !== missionId
+    )
+    const newGoal = { ...goal, missions: [...tmpMissions] }
+    this.goals = [...this.goals].map((g) => {
+      if (g.id === newGoal.id) {
+        return newGoal
+      }
+      return g
+    })
+    // return newGoal
+  }
 
   loadState() {
     if (typeof window !== "undefined" && window.localStorage) {
@@ -103,4 +125,4 @@ class Goals {
     }
   }
 }
-export const goalsStore = new Goals()
+export const appStore = new App()
