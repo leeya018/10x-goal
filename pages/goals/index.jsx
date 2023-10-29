@@ -6,14 +6,17 @@ import { colors, getRandomNumber } from "lib/util"
 import NoSsr from "@material-ui/core/NoSsr"
 import Title from "components/Title"
 import ColorPicker from "components/ColorPicker"
+import GoalModal from "components/modal/editDelete/goal"
+import { MODAL_NAMES, modalStore } from "mobx/modalStore"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
   const [color, setColor] = useState("")
+  const [chosenGoal, setChosenGoal] = useState(null)
   const [isPalateOpen, setIsPalateOpen] = useState(false)
   const router = useRouter()
 
-  const { goals, addGoal } = appStore
+  const { goals, addGoal, removeGoal, updateGoal } = appStore
   console.log(color)
   const addTask = () => {
     if (!color) return
@@ -28,6 +31,11 @@ const index = observer(() => {
     <div className="p-5 bg-r max-w-xs mx-auto">
       <Title>Goals</Title>
 
+      <GoalModal
+        name={chosenGoal?.name}
+        remove={() => removeGoal(chosenGoal.id)}
+        update={(name) => updateGoal(chosenGoal.id, name)}
+      />
       <div className="mb-5 ">
         <h1>Choose a Color</h1>
         {isPalateOpen && (
@@ -61,24 +69,25 @@ const index = observer(() => {
       <ul className="h-[30rem] flex flex-col overflow-y-scroll  ">
         {goals &&
           goals.length > 0 &&
-          goals.map((goal, index) => <Goal key={index} goal={goal} />)}
+          goals.map((goal, index) => (
+            <Goal key={index} goal={goal} setChosenGoal={setChosenGoal} />
+          ))}
       </ul>
     </div>
   )
 })
 
-const Goal = observer(({ goal }) => {
-  const { goals, addGoal, removeGoal } = appStore
-
+const Goal = observer(({ goal, setChosenGoal }) => {
   const gradientClass = `mb-2 bg-gray-200 p-2 rounded border-2
-   rounder-md bg-gradient-to-br`
+  rounder-md bg-gradient-to-br`
 
   console.log(gradientClass)
   const router = useRouter()
 
   const remove = (e) => {
     e.stopPropagation()
-    removeGoal(goal.id)
+    setChosenGoal(goal)
+    modalStore.openModal(MODAL_NAMES.GOAL_UPDATE)
   }
 
   return (

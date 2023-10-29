@@ -11,12 +11,14 @@ class App {
     this.loadState()
 
     this.addGoal = this.addGoal.bind(this)
+    this.updateGoal = this.updateGoal.bind(this)
     this.addMission = this.addMission.bind(this)
     this.setChooseMission = this.setChooseMission.bind(this)
     this.increaseMissionAmount = this.increaseMissionAmount.bind(this)
     this.decreaseMissionAmount = this.decreaseMissionAmount.bind(this)
     this.removeGoal = this.removeGoal.bind(this)
     this.removeMission = this.removeMission.bind(this)
+    this.updateMission = this.updateMission.bind(this)
   }
   setChooseMission(goalId, missionId) {
     this.chosenMissionId = missionId
@@ -36,6 +38,15 @@ class App {
 
   removeGoal(id) {
     const filteredGoals = [...this.goals].filter((goal) => goal.id !== id)
+    this.goals = [...filteredGoals]
+  }
+  updateGoal(id, name) {
+    const filteredGoals = [...this.goals].map((goal) => {
+      if (goal.id == id) {
+        return { ...goal, name }
+      }
+      return goal
+    })
     this.goals = [...filteredGoals]
   }
   decreaseMissionAmount(goalId, missionId) {
@@ -89,7 +100,27 @@ class App {
       }
       return g
     })
-    // return newGoal
+  }
+  updateMission(goalId, missionId, name, amount) {
+    const goal = [...this.goals].find((goal) => goal.id == goalId)
+    console.log(toJS(goal))
+    const tmpMissions = goal.missions.map((mission) => {
+      if (mission.id == missionId) {
+        return {
+          ...mission,
+          name,
+          amount,
+        }
+      }
+      return mission
+    })
+    const newGoal = { ...goal, missions: [...tmpMissions] }
+    this.goals = [...this.goals].map((g) => {
+      if (g.id === newGoal.id) {
+        return newGoal
+      }
+      return g
+    })
   }
 
   loadState() {
