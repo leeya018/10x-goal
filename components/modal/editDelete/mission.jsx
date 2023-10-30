@@ -9,22 +9,23 @@ import CloseButton from "ui/button/close"
 import Title from "components/Title"
 import { toJS } from "mobx"
 
-const GoalModal = observer(({ goalName, remove, update }) => {
+const Mission = observer(({ goalName, remove, update }) => {
   const { modalName, closeModal } = modalStore
 
-  const [name, setName] = useState(goalName)
-
-  const inputRef = useRef()
+  const [name, setName] = useState("")
+  console.log(name)
   useEffect(() => {
     setName(goalName)
   }, [goalName])
+
+  const inputRef = useRef()
 
   const onRemove = () => {
     remove()
 
     modalStore.closeModal()
   }
-  const onUpdate = () => {
+  const onUpdate = async () => {
     update(name)
 
     modalStore.closeModal()
@@ -78,4 +79,4 @@ const GoalModal = observer(({ goalName, remove, update }) => {
   )
 })
 
-export default GoalModal
+export default Mission

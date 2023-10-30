@@ -6,6 +6,7 @@ import { toJS } from "mobx"
 import GoBack from "components/GoBack"
 import Title from "components/Title"
 import { getDiffInDays } from "lib/util"
+import MissionModal from "components/modal/editDelete/mission"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
@@ -61,6 +62,11 @@ const index = observer(() => {
       <GoBack />
       <div>
         <Title className="pt-5">Missions</Title>
+        {/* <MissionModal
+           name={?.name}
+           remove={() => removeGoal(.id)}
+           update={(name) => updateGoal(.id, name)}
+        />  */}
 
         <div className="mb-5 ">
           <input

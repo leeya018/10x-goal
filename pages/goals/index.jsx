@@ -32,7 +32,7 @@ const index = observer(() => {
       <Title>Goals</Title>
 
       <GoalModal
-        name={chosenGoal?.name}
+        goalName={chosenGoal?.name}
         remove={() => removeGoal(chosenGoal.id)}
         update={(name) => updateGoal(chosenGoal.id, name)}
       />
@@ -78,6 +78,8 @@ const index = observer(() => {
 })
 
 const Goal = observer(({ goal, setChosenGoal }) => {
+  const { goals, addGoal, removeGoal } = appStore
+
   const gradientClass = `mb-2 bg-gray-200 p-2 rounded border-2
   rounder-md bg-gradient-to-br`
 
