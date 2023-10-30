@@ -126,10 +126,12 @@ const Mission = observer(({ mission, goal }) => {
       key={index}
       onClick={() => {
         if (getDiffInDays(new Date(), mission.date) > 1) {
-          return
+          router.push(`/feedback`)
         }
         // setChooseMission(goal.id, mission.id)
         setChooseMission(goal.id, mission.id)
+        // router.push(`/feedback`)
+
         router.push(`/trace`)
       }}
       className="relative mb-2 bg-gray-200 rounded border-2 flex flex-col"
