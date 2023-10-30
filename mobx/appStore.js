@@ -19,6 +19,7 @@ class App {
     this.removeGoal = this.removeGoal.bind(this)
     this.removeMission = this.removeMission.bind(this)
     this.updateMission = this.updateMission.bind(this)
+    this.addFeedback = this.addFeedback.bind(this)
   }
   setChooseMission(goalId, missionId) {
     this.chosenMissionId = missionId
@@ -110,6 +111,27 @@ class App {
           ...mission,
           name,
           targetAmount,
+        }
+      }
+      return mission
+    })
+    const newGoal = { ...goal, missions: [...tmpMissions] }
+    this.goals = [...this.goals].map((g) => {
+      if (g.id === newGoal.id) {
+        return newGoal
+      }
+      return g
+    })
+  }
+  addFeedback(goalId, missionId, whyNotDone, howToImprove) {
+    const goal = [...this.goals].find((goal) => goal.id == goalId)
+    console.log(toJS(goal))
+    const tmpMissions = goal.missions.map((mission) => {
+      if (mission.id == missionId) {
+        return {
+          ...mission,
+          whyNotDone,
+          howToImprove,
         }
       }
       return mission

@@ -9,6 +9,8 @@ import { getDiffInDays } from "lib/util"
 import MissionModal from "components/modal/editDelete/mission"
 import { MODAL_NAMES, modalStore } from "mobx/modalStore"
 import EditButton from "ui/button/edit"
+import MissionFeedbackModal from "components/modal/editDelete/missionFeedback"
+import { MdFeedback } from "react-icons/md"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
@@ -67,6 +69,7 @@ const index = observer(() => {
         <Title className="pt-5">Missions</Title>
 
         <MissionModal remove={removeMission} update={updateMission} />
+        <MissionFeedbackModal />
         <div className="mb-5 ">
           <input
             disabled={canAddGoal()}
@@ -163,6 +166,14 @@ const Mission = observer(({ mission, goal }) => {
             e.stopPropagation()
             setChooseMission(goal.id, mission.id)
             modalStore.openModal(MODAL_NAMES.MISSION_UPDATE)
+          }}
+        />
+        <MdFeedback
+          className=""
+          onClick={(e) => {
+            e.stopPropagation()
+            setChooseMission(goal.id, mission.id)
+            modalStore.openModal(MODAL_NAMES.FEEDBACK_MISSION_UPDATE)
           }}
         />
       </div>

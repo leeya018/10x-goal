@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx"
 export const MODAL_NAMES = {
   GOAL_UPDATE: "GOAL_UPDATE",
   MISSION_UPDATE: "MISSION_UPDATE",
+  FEEDBACK_MISSION_UPDATE: " FEEDBACK_MISSION_UPDATE",
 }
 class Modal {
   modalName = ""
