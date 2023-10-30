@@ -8,6 +8,7 @@ import Title from "components/Title"
 import { getDiffInDays } from "lib/util"
 import MissionModal from "components/modal/editDelete/mission"
 import { MODAL_NAMES, modalStore } from "mobx/modalStore"
+import EditButton from "ui/button/edit"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
@@ -128,36 +129,43 @@ const Mission = observer(({ mission, goal }) => {
         setChooseMission(goal.id, mission.id)
         router.push(`/trace`)
       }}
-      className="relative mb-2 bg-gray-200 rounded border-2 "
+      className="relative mb-2 bg-gray-200 rounded border-2 flex flex-col"
     >
-      <div
-        className="absolute left-0 bg-green bg-opacity-40 h-full"
-        style={{
-          width: `${(mission.amount / parseInt(mission.targetAmount)) * 100}%`,
-        }}
-      ></div>
-      <div
-        className={`${
-          getDiffInDays(new Date(), mission.date) > 1 &&
-          "bg-opacity-30 bg-gray_dark"
-        } flex justify-between items-center px-2 h-14`}
-      >
-        <div>{mission.name}</div>
-        <div>{mission.targetAmount}</div>
-        <div>
-          {((mission.amount / parseInt(mission.targetAmount)) * 100).toFixed(0)}
-          %
+      <div className="">
+        <div
+          className="absolute left-0 bg-green bg-opacity-40 h-full"
+          style={{
+            width: `${
+              (mission.amount / parseInt(mission.targetAmount)) * 100
+            }%`,
+          }}
+        ></div>
+        <div
+          className={`${
+            getDiffInDays(new Date(), mission.date) > 1 &&
+            "bg-opacity-30 bg-gray_dark"
+          } flex justify-between items-center px-2 h-14`}
+        >
+          <div>{mission.name}</div>
+          <div>{mission.targetAmount}</div>
+          <div>
+            {((mission.amount / parseInt(mission.targetAmount)) * 100).toFixed(
+              0
+            )}
+            %
+          </div>
         </div>
       </div>
-      <button
-        onClick={(e) => {
-          e.stopPropagation()
-          setChooseMission(goal.id, mission.id)
-          modalStore.openModal(MODAL_NAMES.MISSION_UPDATE)
-        }}
-      >
-        remove{" "}
-      </button>
+      <div className="flex justify-end">
+        <EditButton
+          className=""
+          onClick={(e) => {
+            e.stopPropagation()
+            setChooseMission(goal.id, mission.id)
+            modalStore.openModal(MODAL_NAMES.MISSION_UPDATE)
+          }}
+        />
+      </div>
     </li>
   )
 })
