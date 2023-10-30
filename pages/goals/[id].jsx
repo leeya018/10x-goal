@@ -7,19 +7,21 @@ import GoBack from "components/GoBack"
 import Title from "components/Title"
 import { getDiffInDays } from "lib/util"
 import MissionModal from "components/modal/editDelete/mission"
+import { MODAL_NAMES, modalStore } from "mobx/modalStore"
 
 const index = observer(() => {
   const [inputValue, setInputValue] = useState("")
   const [inputTValue, setInputTValue] = useState("")
   const [lastMission, setLastMission] = useState(null)
+  // const [chosenMission, setChosenMission] = useState(null)
   const [goal, setGoal] = useState(null)
-  // const [render, setRender] = useState(false)
   const router = useRouter()
 
   const { id } = router.query
   console.log("id page => " + id)
 
-  const { goals, addMission, setChooseMission } = appStore
+  const { goals, updateMission, removeMission, addMission, setChooseMission } =
+    appStore
 
   useEffect(() => {
     if (!id) return
@@ -62,12 +64,8 @@ const index = observer(() => {
       <GoBack />
       <div>
         <Title className="pt-5">Missions</Title>
-        {/* <MissionModal
-           name={?.name}
-           remove={() => removeGoal(.id)}
-           update={(name) => updateGoal(.id, name)}
-        />  */}
 
+        <MissionModal remove={removeMission} update={updateMission} />
         <div className="mb-5 ">
           <input
             disabled={canAddGoal()}
@@ -101,7 +99,7 @@ const index = observer(() => {
                 <Mission
                   key={index}
                   goal={goal}
-                  setChooseMission={setChooseMission}
+                  // setChooseMission={setChooseMission}
                   mission={mission}
                 />
               ))}
@@ -111,8 +109,8 @@ const index = observer(() => {
   )
 })
 
-const Mission = observer(({ mission, setChooseMission, goal }) => {
-  const { goals, addGoal, removeMission } = appStore
+const Mission = observer(({ mission, goal }) => {
+  const { goals, addGoal, removeMission, setChooseMission } = appStore
 
   const router = useRouter()
   const remove = (e) => {
@@ -126,6 +124,7 @@ const Mission = observer(({ mission, setChooseMission, goal }) => {
         if (getDiffInDays(new Date(), mission.date) > 1) {
           return
         }
+        // setChooseMission(goal.id, mission.id)
         setChooseMission(goal.id, mission.id)
         router.push(`/trace`)
       }}
@@ -144,12 +143,21 @@ const Mission = observer(({ mission, setChooseMission, goal }) => {
         } flex justify-between items-center px-2 h-14`}
       >
         <div>{mission.name}</div>
+        <div>{mission.targetAmount}</div>
         <div>
           {((mission.amount / parseInt(mission.targetAmount)) * 100).toFixed(0)}
           %
         </div>
       </div>
-      <button onClick={(e) => remove(e)}>remove </button>
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          setChooseMission(goal.id, mission.id)
+          modalStore.openModal(MODAL_NAMES.MISSION_UPDATE)
+        }}
+      >
+        remove{" "}
+      </button>
     </li>
   )
 })

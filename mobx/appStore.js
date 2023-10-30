@@ -101,7 +101,7 @@ class App {
       return g
     })
   }
-  updateMission(goalId, missionId, name, amount) {
+  updateMission(goalId, missionId, name, targetAmount) {
     const goal = [...this.goals].find((goal) => goal.id == goalId)
     console.log(toJS(goal))
     const tmpMissions = goal.missions.map((mission) => {
@@ -109,7 +109,7 @@ class App {
         return {
           ...mission,
           name,
-          amount,
+          targetAmount,
         }
       }
       return mission
